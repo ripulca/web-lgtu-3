@@ -35,9 +35,11 @@
                 }
                 ?>
             </div>
-            <button class="add_content_btn">
-                Показать еще
-            </button>
+            <div class="main_btn_container">
+                <button class="add_content_btn">
+                    Показать еще
+                </button>
+            </div>
         </main>
         <footer class='footer'>
             <p>Здесь могли быть мои контакты</p>
