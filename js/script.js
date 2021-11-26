@@ -34,12 +34,40 @@ $(function () {
         }
       });
 
+    $('.submit').click(function(){
+        if($('.registration').hasClass('open')){
+            let registerForm = new FormData(document.getElementsByName('registration'));
+            fetch('/registration.php', {
+                method: 'POST',
+                body: registerForm
+            })
+            .then(response => response.json())
+            .then((result) => {
+            if (result.errors) {
+                //вывод ошибок валидации на форму
+                first_inp=document.getElementsByClassName('modal_win_input');
+                
+            } else {
+                //успешная регистрация, обновляем страницу
+                $('.registration').removeClass(' open');
+                window.location.reload();
+            }
+            })
+            .catch(error => console.log(error));
+        }
+        if($('.enter').hasClass('open')){
+            var login = document.registration.login.value;
+            var pwd = document.registration.password.value;
+
+        }
+    });
+
     $('.add_content_btn').click(function(){
         lastId = $('.photo_card').filter(':last').attr('data-id');
         lastLine=$('.main_photos_row').filter(':last');
         $.ajax({
-            url:'/page_script.php?lastId=' + lastId,  
-            method: 'get',             /* Метод передачи (post или get) */
+            url:'/php_scripts/page_script.php?lastId=' + lastId,  
+            method: 'get', 
             dataType: 'html',
             success:function(data){
                 lastLine.after(data);
@@ -117,7 +145,7 @@ function formValidation(){
     if($('.registration').hasClass('open')){
         var login = document.registration.login.value;
         var pwd = document.registration.password.value;
-        // var pwd_repeat=document.registration.password_repeat;
+        var pwd_repeat=document.registration.password_repeat;
         var email = document.registration.email.value;
         var phone = document.registration.phone.value;
         // console.log(login+' '+pwd+' '+email+' '+phone);
@@ -135,5 +163,13 @@ function formValidation(){
             console.log(login+' '+pwd);
         }
     }
+    $.ajax({
+        url:'/validation.php',  
+        method: 'post',   
+        dataType: 'html',
+        success:function(data){
+            
+        }
+    });
     return false;
 }

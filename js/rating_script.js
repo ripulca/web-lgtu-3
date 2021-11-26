@@ -38,7 +38,6 @@ function initRatings(){
             const ratingItem = ratingItems[index];
             ratingItem.addEventListener('mouseenter', function(e){
                 initRatingVars(ratingItem);
-                console.log(ratingItem.value);
                 setRatingActiveWidth(ratingItem.value);
             });
             ratingItem.addEventListener('mouseleave', function(e){

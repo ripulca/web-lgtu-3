@@ -1,6 +1,12 @@
 <?php
     require 'pdo.php';
-    require 'html\header.html';
+    require 'html/header.html';
+    $sql = "SELECT photo_id, photo_path FROM photos ORDER BY photo_id ASC LIMIT 9";
+    $proc=$db_connection->prepare($sql);
+    // $proc->bindParam(':id', $START_ID);
+    $proc->execute();
+    // $db_connection->query($sql);
+    // $photos=$proc->fetch(PDO::FETCH_LAZY);
 ?>
         <main class="main">
             <div class="main_info">
@@ -13,27 +19,19 @@
                 </div>
             </div>
             <div class="main_photos_container">
-                <?php
-                $sql = "SELECT photo_id, photo_path FROM photos ORDER BY photo_id ASC LIMIT 9";
-                $proc=$db_connection->prepare($sql);
-                // $proc->bindParam(':id', $START_ID);
-                $proc->execute();
-                // $db_connection->query($sql);
-                // $photos=$proc->fetch(PDO::FETCH_LAZY);
-                foreach ($db_connection->query($sql) as $photo) {
-                    if ($START_ID==$TAG_MARK) {
-                        echo '<div class="main_photos_row">';
-                        $TAG_MARK+=$PHOTOS_IN_ROW;
-                    }
-                    echo '<a href="photo_page.php?photoid='.$photo['photo_id'].'">';
-                    echo '<img class="photo_card" src="'.$photo['photo_path'].'" width="400" height="auto" data-id="'.$photo['photo_id'].'" />';
-                    echo '</a>';
-                    $START_ID+=1;
+                <?php foreach($db_connection->query($sql) as $photo):
+                    if ($START_ID==$TAG_MARK) {?>
+                        <div class="main_photos_row">
+                        <?php $TAG_MARK+=$PHOTOS_IN_ROW;
+                    }?>
+                    <a href="photo_page.php?photoid=<?php echo $photo['photo_id'];?>">
+                    <img class="photo_card" src="<?php echo $photo['photo_path'];?>" width="400" height="auto" data-id="<?php echo $photo['photo_id'];?>" />
+                    </a>
+                    <?php $START_ID+=1;
                     if ($START_ID==$TAG_MARK) {
                         echo '</div>';
                     }
-                }
-                ?>
+                    endforeach?>
             </div>
             <div class="main_btn_container">
                 <button class="add_content_btn">
@@ -45,5 +43,5 @@
             <p>Здесь могли быть мои контакты</p>
         </footer>
 <?php
-    require 'html\modal_win.html';
+    require 'html/modal_win.html';
 ?>
