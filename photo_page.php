@@ -13,7 +13,8 @@
                     $proc->bindParam(1, $photo_id, PDO::PARAM_INT);
                     $proc->execute();
                     //$db_connection->query($sql);
-                    $photo=$proc->fetch(PDO::FETCH_ASSOC);?>
+                    $photo=$proc->fetch(PDO::FETCH_ASSOC);
+                ?>
                     <img src="<?php echo $photo['photo_path'];?>" width="30%" height="auto"/>;
                 
             </div>

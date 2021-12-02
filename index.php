@@ -3,10 +3,7 @@
     require 'html/header.html';
     $sql = "SELECT photo_id, photo_path FROM photos ORDER BY photo_id ASC LIMIT 9";
     $proc=$db_connection->prepare($sql);
-    // $proc->bindParam(':id', $START_ID);
     $proc->execute();
-    // $db_connection->query($sql);
-    // $photos=$proc->fetch(PDO::FETCH_LAZY);
 ?>
         <main class="main">
             <div class="main_info">
@@ -39,9 +36,7 @@
                 </button>
             </div>
         </main>
-        <footer class='footer'>
-            <p>Здесь могли быть мои контакты</p>
-        </footer>
 <?php
+    require 'html/footer.html';
     require 'html/modal_win.html';
 ?>
